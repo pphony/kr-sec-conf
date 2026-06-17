@@ -1,0 +1,57 @@
+name: crawl-and-deploy
+
+# 매일 06:00 KST(=21:00 UTC) 자동 실행 + 수동 실행 + main push 시 실행
+on:
+  schedule:
+    - cron: "0 21 * * *"
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write   # conferences.json 커밋용
+  pages: write      # GitHub Pages 배포용
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: pip install requests beautifulsoup4
+
+      - name: Run crawler
+        run: python crawler.py
+
+      - name: Commit updated data
+        run: |
+          git config user.name  "conf-bot"
+          git config user.email "conf-bot@users.noreply.github.com"
+          git add data/conferences.json
+          git commit -m "chore: update conference data ($(date -u +%F))" || echo "변경 없음"
+          git push || echo "push 생략"
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .   # index.html + data/conferences.json 가 루트에 있음
+
+  deploy:
+    needs: crawl
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
