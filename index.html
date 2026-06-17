@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>국내 컴퓨터·보안 학회 일정판</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#FBFAF6; --panel:#FFFFFF; --ink:#15171C; --ink-soft:#5B5F6B; --ink-faint:#9AA0AC;
+    --line:#E7E3D8; --line-soft:#F0EDE4;
+    --indigo:#2F3AE0; --indigo-soft:#ECEDFD;
+    --past:#9AA0AC; --soon:#E5484D; --near:#D97706; --ok:#1F9D57; --tba:#7C5CE0;
+    --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --sans:'Pretendard',system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper); color:var(--ink); font-family:var(--sans);
+    line-height:1.5; -webkit-font-smoothing:antialiased;
+    background-image:linear-gradient(var(--line-soft) 1px,transparent 1px);
+    background-size:100% 44px; background-position:0 -1px;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint)}
+
+  header{border-bottom:1px solid var(--line);background:var(--paper)}
+  .head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding:30px 0 22px;flex-wrap:wrap}
+  h1{font-size:30px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+  h1 .dot{color:var(--indigo)}
+  .sub{color:var(--ink-soft);font-size:14px;margin-top:6px;max-width:46ch}
+  .meta{text-align:right;font-family:var(--mono);font-size:12px;color:var(--ink-soft);line-height:1.7;white-space:nowrap}
+  .meta b{color:var(--ink)}
+  .src-pill{display:inline-block;margin-top:6px;padding:3px 8px;border:1px solid var(--line);border-radius:999px;font-size:11px}
+  .src-pill.live{border-color:var(--ok);color:var(--ok)}
+  .src-pill.demo{border-color:var(--tba);color:var(--tba)}
+
+  .hero{padding:26px 0 8px}
+  .hero-label{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .hero-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .up{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;position:relative;overflow:hidden}
+  .up::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--bar,var(--indigo))}
+  .up .dday{font-family:var(--mono);font-weight:700;font-size:13px;color:var(--bar,var(--indigo));letter-spacing:.02em}
+  .up .nm{font-weight:700;font-size:16px;margin:8px 0 3px;letter-spacing:-.01em}
+  .up .dt{font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+  .up .loc{font-size:12px;color:var(--ink-faint);margin-top:2px}
+
+  .controls{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);padding:14px 0;margin-top:24px}
+  .ctl-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .search{flex:1;min-width:200px;display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 12px}
+  .search input{border:0;outline:0;background:transparent;font-family:var(--sans);font-size:14px;width:100%;color:var(--ink)}
+  .search svg{flex:none}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font-family:var(--sans);font-size:13px;padding:7px 12px;border:1px solid var(--line);background:var(--panel);border-radius:999px;cursor:pointer;color:var(--ink-soft);transition:.12s;white-space:nowrap}
+  .chip:hover{border-color:var(--ink-faint)}
+  .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .view-toggle{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .view-toggle button{font-family:var(--mono);font-size:12px;letter-spacing:.05em;padding:8px 12px;background:var(--panel);border:0;cursor:pointer;color:var(--ink-soft)}
+  .view-toggle button.on{background:var(--ink);color:#fff}
+
+  main{padding:8px 0 60px}
+  .month-h{display:flex;align-items:baseline;gap:12px;margin:30px 0 12px}
+  .month-h .m{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--ink)}
+  .month-h .ln{flex:1;height:1px;background:var(--line)}
+  .month-h .cnt{font-family:var(--mono);font-size:12px;color:var(--ink-faint)}
+
+  .row{display:grid;grid-template-columns:118px 1fr auto;gap:18px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:8px;transition:.12s;text-decoration:none;color:inherit}
+  .row:hover{border-color:var(--ink-faint);transform:translateX(2px)}
+  .row.past{opacity:.62}
+  .ddaybox{text-align:center}
+  .ddaybox .big{font-family:var(--mono);font-weight:700;font-size:21px;line-height:1;color:var(--st)}
+  .ddaybox .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-top:5px}
+  .info .nm{font-weight:700;font-size:16px;letter-spacing:-.01em}
+  .info .nm .scope{font-family:var(--mono);font-size:10px;vertical-align:middle;margin-left:7px;padding:2px 6px;border-radius:5px;background:var(--indigo-soft);color:var(--indigo);letter-spacing:.04em}
+  .info .nm .scope.intl{background:#FDF0E7;color:#C2410C}
+  .info .nm .scope.ind{background:#EFEFF2;color:#52525B}
+  .info .line2{display:flex;gap:14px;flex-wrap:wrap;margin-top:5px;font-size:13px;color:var(--ink-soft)}
+  .info .line2 .k{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-right:4px}
+  .info .host{font-size:12px;color:var(--ink-faint);margin-top:3px}
+  .info .est{font-family:var(--mono);font-size:10px;color:var(--tba);border:1px solid var(--tba);border-radius:5px;padding:1px 5px;margin-left:6px;letter-spacing:.04em}
+  .cfp{text-align:right;min-width:96px}
+  .cfp .k{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+  .cfp .v{font-family:var(--mono);font-size:13px;font-weight:500;margin-top:3px;color:var(--ink)}
+  .cfp .v.urgent{color:var(--soon)}
+  .cfp .v.none{color:var(--ink-faint);font-weight:400}
+  .cat-dot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:middle}
+
+  .tl{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 18px 10px;margin-top:18px;overflow-x:auto}
+  .tl-grid{position:relative;min-width:760px}
+  .tl-months{display:grid;grid-template-columns:repeat(12,1fr);border-bottom:1px solid var(--line);padding-bottom:6px}
+  .tl-months span{font-family:var(--mono);font-size:11px;color:var(--ink-faint);text-align:center}
+  .tl-now{position:absolute;top:22px;bottom:0;width:2px;background:var(--soon);z-index:3}
+  .tl-now::after{content:"오늘";position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:10px;color:var(--soon);white-space:nowrap}
+  .tl-track{position:relative;margin-top:14px}
+  .tl-ev{position:absolute;height:26px;border-radius:6px;display:flex;align-items:center;padding:0 8px;font-size:11px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;border:1px solid rgba(0,0,0,.06)}
+
+  footer{border-top:1px solid var(--line);padding:26px 0 50px;margin-top:30px}
+  .foot-grid{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-start}
+  footer .eyebrow{margin-bottom:8px}
+  .srclist{font-size:13px;color:var(--ink-soft);line-height:1.9}
+  .srclist a{color:var(--indigo);text-decoration:none}
+  .srclist a:hover{text-decoration:underline}
+  .note{font-size:12px;color:var(--ink-faint);max-width:42ch;line-height:1.7}
+  .note code{font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--ink-soft);margin-top:14px}
+  .legend i{width:9px;height:9px;border-radius:2px;display:inline-block;margin-right:5px;vertical-align:middle}
+  .empty{text-align:center;padding:60px 0;color:var(--ink-faint);font-size:14px}
+
+  @media(max-width:780px){
+    .hero-cards{grid-template-columns:1fr}
+    .row{grid-template-columns:64px 1fr;gap:12px}
+    .cfp{grid-column:2;text-align:left;margin-top:2px}
+    .meta{text-align:left}
+    .head{align-items:flex-start}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}.row:hover{transform:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <div class="eyebrow">KR · COMPUTING &amp; SECURITY · ACADEMIC CALENDAR</div>
+        <h1 style="margin-top:8px">국내 컴퓨터·보안 학회 일정판<span class="dot">.</span></h1>
+        <p class="sub">정보보호·컴퓨팅 분야 국내 학회와 주요 국제 행사의 일정·발표논문 마감을 한 화면에서 추적합니다.</p>
+      </div>
+      <div class="meta">
+        DATA UPDATED<br><b id="updated">—</b>
+        <span id="srcPill" class="src-pill demo">내장 데이터(데모)</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-label">
+      <span class="eyebrow">다가오는 일정 — Next up</span>
+      <span style="flex:1;height:1px;background:var(--line)"></span>
+    </div>
+    <div class="hero-cards" id="hero"></div>
+  </div>
+</section>
+
+<div class="controls">
+  <div class="wrap">
+    <div class="ctl-row">
+      <label class="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="q" type="text" placeholder="학회명·주최·지역 검색 (예: 정보보호, 제주, KIISC)" />
+      </label>
+      <div class="view-toggle">
+        <button id="vList" class="on" onclick="setView('list')">목록</button>
+        <button id="vTime" onclick="setView('time')">타임라인</button>
+      </div>
+    </div>
+    <div class="ctl-row" style="margin-top:10px">
+      <div class="chips" id="catChips"></div>
+      <span style="width:1px;height:22px;background:var(--line);margin:0 2px"></span>
+      <div class="chips" id="scopeChips"></div>
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-soft);margin-left:auto;cursor:pointer">
+        <input type="checkbox" id="hidePast" /> 지난 행사 숨기기
+      </label>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="wrap">
+    <div id="listView"></div>
+    <div id="timeView" style="display:none"></div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="eyebrow">데이터 출처 — Sources</div>
+        <div class="srclist">
+          <a href="https://www.cisc.or.kr" target="_blank" rel="noopener">한국정보보호학회 (KIISC / CISC)</a> ·
+          <a href="https://kiise.or.kr" target="_blank" rel="noopener">한국정보과학회 (KIISE)</a> ·
+          <a href="https://wisa.or.kr" target="_blank" rel="noopener">WISA</a> ·
+          <a href="http://www.icisc.org" target="_blank" rel="noopener">ICISC</a> ·
+          <a href="https://ksci.re.kr" target="_blank" rel="noopener">한국컴퓨터정보학회</a> ·
+          <a href="http://www.kcgsa.org" target="_blank" rel="noopener">한국융합보안학회</a>
+        </div>
+        <div class="legend" id="legend"></div>
+      </div>
+      <div>
+        <div class="eyebrow">자동 갱신 — Auto-update</div>
+        <p class="note">배포 시 <code>data/conferences.json</code>을 자동으로 읽습니다. 크롤러(GitHub Actions)가 매일 학회 사이트를 수집해 이 파일을 갱신하면 화면도 함께 최신화됩니다. 추정(예상) 일정은 <span style="color:var(--tba)">보라색</span>으로 표시되며, 확정 시 크롤러가 덮어씁니다.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ----------------------------------------------------------------------
+   내장 시드 데이터 — 검색으로 확인한 실제 2026 일정 기반.
+   confirmed:false = 예년 기준 추정(확정 시 크롤러가 갱신).
+   배포 시 ./data/conferences.json 이 있으면 그쪽이 우선합니다.
+---------------------------------------------------------------------- */
+const SEED = {
+  updated: "2026-06-17 (시드)",
+  conferences: [
+    { id:"csc-2026", name:"정보과학회 컴퓨터시스템 동계학술대회", host:"한국정보과학회 컴퓨터시스템 소사이어티", scope:"국내",
+      cat:"시스템", start:"2026-01-19", end:"2026-01-21", city:"평창", venue:"모나용평 그린피아",
+      cfp:null, url:"https://css.or.kr/csc2026", confirmed:true, note:"" },
+    { id:"secon-2026", name:"전자정부 정보보호 콘퍼런스 (SECON & eGISEC)", host:"보안뉴스 외", scope:"산업",
+      cat:"산업/정부", start:"2026-03-18", end:"2026-03-20", city:"고양", venue:"일산 킨텍스",
+      cfp:null, url:"https://www.seconexpo.com", confirmed:true, note:"4개 트랙 52개 강연" },
+    { id:"cisc-s-2026", name:"한국정보보호학회 하계학술대회 (CISC-S'26)", host:"한국정보보호학회 (KIISC)", scope:"국내",
+      cat:"정보보호", start:"2026-05-07", end:"2026-05-08", city:"부산", venue:"벡스코 제2전시장",
+      cfp:null, url:"https://www.cisc.or.kr", confirmed:true, note:"" },
+    { id:"typhooncon-2026", name:"TyphoonCon 2026", host:"SSD Secure Disclosure", scope:"산업",
+      cat:"정보보호", start:"2026-05-28", end:"2026-05-29", city:"서울", venue:"Moxy 명동",
+      cfp:null, url:"https://typhooncon.com", confirmed:true, note:"공격보안 컨퍼런스 (트레이닝 5/25~27)" },
+    { id:"kcc-2026", name:"한국컴퓨터종합학술대회 (KCC 2026)", host:"한국정보과학회 (KIISE)", scope:"국내",
+      cat:"컴퓨팅 일반", start:"2026-06-24", end:"2026-06-26", city:"제주", venue:"ICC 제주",
+      cfp:"2026-04-30", url:"https://www.kiise.or.kr/conference/kcc/2026/", confirmed:true, note:"국내 최대 컴퓨터 학술대회" },
+    { id:"ksci-summer-2026", name:"한국컴퓨터정보학회 하계학술대회 (제74차)", host:"한국컴퓨터정보학회 (KSCI)", scope:"국내",
+      cat:"컴퓨팅 일반", start:"2026-07-15", end:"2026-07-17", city:"미정", venue:"미정",
+      cfp:null, url:"https://ksci.re.kr", confirmed:false, note:"예년 7월 개최 기준 추정" },
+    { id:"wisa-2026", name:"WISA 2026 — 27th World Conf. on Info. Security Applications", host:"KIISC · ETRI", scope:"국제",
+      cat:"정보보호", start:"2026-08-26", end:"2026-08-28", city:"제주", venue:"MAISON GLAD Jeju",
+      cfp:null, url:"https://wisa.or.kr", confirmed:true, note:"AI·블록체인·HW 암호 등" },
+    { id:"cisc-w-2026", name:"한국정보보호학회 동계학술대회 (CISC-W'26)", host:"한국정보보호학회 (KIISC)", scope:"국내",
+      cat:"정보보호", start:"2026-11-27", end:"2026-11-28", city:"미정", venue:"미정",
+      cfp:null, url:"https://www.cisc.or.kr", confirmed:false, note:"예년 11월 말 개최 기준 추정" },
+    { id:"kcsa-fall-2026", name:"한국융합보안학회 추계학술대회", host:"한국융합보안학회 (KCSA)", scope:"국내",
+      cat:"정보보호", start:"2026-11-13", end:"2026-11-13", city:"미정", venue:"미정",
+      cfp:null, url:"http://www.kcgsa.org", confirmed:false, note:"예년 기준 추정" },
+    { id:"icisc-2026", name:"ICISC 2026 — 29th Int'l Conf. on Info. Security & Cryptology", host:"한국정보보호학회 (KIISC)", scope:"국제",
+      cat:"정보보호", start:"2026-12-02", end:"2026-12-04", city:"서울", venue:"미정",
+      cfp:"2026-09-01", url:"http://www.icisc.org", confirmed:false, note:"예년 11~12월 개최/마감 기준 추정" },
+    { id:"ksc-2026", name:"한국소프트웨어종합학술대회 (KSC 2026)", host:"한국정보과학회 (KIISE)", scope:"국내",
+      cat:"소프트웨어", start:"2026-12-16", end:"2026-12-18", city:"미정", venue:"미정",
+      cfp:null, url:"https://www.kiise.or.kr", confirmed:false, note:"예년 12월 개최 기준 추정" }
+  ]
+};
+
+const CAT_COLOR = {
+  "정보보호":"#2F3AE0", "컴퓨팅 일반":"#0E7490", "소프트웨어":"#7C5CE0",
+  "시스템":"#1F9D57", "산업/정부":"#A16207"
+};
+const MONTHS = ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"];
+
+let DATA = [];
+let state = { q:"", cat:"all", scope:"all", hidePast:false, view:"list" };
+
+const today = new Date(); today.setHours(0,0,0,0);
+const d = s => { const [y,m,dd]=s.split("-").map(Number); return new Date(y,m-1,dd); };
+const dayDiff = (a,b)=>Math.round((a-b)/86400000);
+function ddayEvent(c){ return dayDiff(d(c.start), today); }
+function statusColor(diff){
+  if(diff<0) return "var(--past)";
+  if(diff<=7) return "var(--soon)";
+  if(diff<=30) return "var(--near)";
+  return "var(--ok)";
+}
+function ddayText(diff){
+  if(diff===0) return "D-DAY";
+  if(diff>0) return "D-"+diff;
+  return "종료";
+}
+function fmtRange(c){
+  const s=d(c.start), e=d(c.end);
+  const f=(x)=>`${x.getMonth()+1}.${String(x.getDate()).padStart(2,"0")}`;
+  return `${s.getFullYear()} · ${f(s)}${c.start!==c.end?"–"+f(e):""}`;
+}
+function fmtCfp(c){
+  if(!c.cfp) return {txt:"—", cls:"none"};
+  const diff=dayDiff(d(c.cfp),today);
+  const dd=d(c.cfp);
+  const base=`${dd.getMonth()+1}.${String(dd.getDate()).padStart(2,"0")}`;
+  if(diff<0) return {txt:base+" (마감)", cls:"none"};
+  return {txt:base+` (D-${diff})`, cls: diff<=14?"urgent":""};
+}
+
+function renderHero(){
+  const up = DATA.filter(c=>ddayEvent(c)>=0).sort((a,b)=>ddayEvent(a)-ddayEvent(b)).slice(0,3);
+  const el=document.getElementById("hero");
+  if(!up.length){ el.innerHTML=`<div class="up"><div class="nm">예정된 다가오는 행사가 없습니다</div></div>`; return; }
+  el.innerHTML = up.map(c=>{
+    const diff=ddayEvent(c); const col=statusColor(diff);
+    return `<div class="up" style="--bar:${col}">
+      <div class="dday">${ddayText(diff)} · ${fmtRange(c)}</div>
+      <div class="nm">${shorten(c.name)}</div>
+      <div class="dt">${c.host}</div>
+      <div class="loc">${c.city}${c.confirmed?"":" · 일정 추정"}</div>
+    </div>`;
+  }).join("");
+}
+function shorten(n){ return n.length>34? n.slice(0,33)+"…" : n; }
+
+function renderChips(){
+  const cats=["all",...Object.keys(CAT_COLOR)];
+  document.getElementById("catChips").innerHTML = cats.map(c=>
+    `<button class="chip ${state.cat===c?"on":""}" onclick="setCat('${c}')">${c==="all"?"전체 분야":c}</button>`).join("");
+  const scopes=["all","국내","국제","산업"];
+  document.getElementById("scopeChips").innerHTML = scopes.map(s=>
+    `<button class="chip ${state.scope===s?"on":""}" onclick="setScope('${s}')">${s==="all"?"전체 범위":s}</button>`).join("");
+}
+function setCat(c){state.cat=c;renderChips();renderAll();}
+function setScope(s){state.scope=s;renderChips();renderAll();}
+function setView(v){
+  state.view=v;
+  document.getElementById("vList").classList.toggle("on",v==="list");
+  document.getElementById("vTime").classList.toggle("on",v==="time");
+  document.getElementById("listView").style.display = v==="list"?"":"none";
+  document.getElementById("timeView").style.display = v==="time"?"":"none";
+  renderAll();
+}
+
+function filtered(){
+  return DATA.filter(c=>{
+    if(state.cat!=="all" && c.cat!==state.cat) return false;
+    if(state.scope!=="all" && c.scope!==state.scope) return false;
+    if(state.hidePast && ddayEvent(c)<0) return false;
+    if(state.q){
+      const hay=(c.name+c.host+c.city+c.venue+c.cat+c.scope).toLowerCase();
+      if(!hay.includes(state.q.toLowerCase())) return false;
+    }
+    return true;
+  });
+}
+
+function renderList(){
+  const list=filtered().sort((a,b)=>d(a.start)-d(b.start));
+  const el=document.getElementById("listView");
+  if(!list.length){ el.innerHTML=`<div class="empty">조건에 맞는 학회가 없습니다. 필터를 조정해 보세요.</div>`; return; }
+  let html="", curKey="";
+  for(const c of list){
+    const dt=d(c.start); const key=`${dt.getFullYear()}-${dt.getMonth()}`;
+    if(key!==curKey){
+      curKey=key;
+      const cnt=list.filter(x=>{const xx=d(x.start);return xx.getFullYear()===dt.getFullYear()&&xx.getMonth()===dt.getMonth();}).length;
+      html+=`<div class="month-h"><span class="m">${dt.getFullYear()} / ${MONTHS[dt.getMonth()]}</span><span class="ln"></span><span class="cnt">${cnt}건</span></div>`;
+    }
+    const diff=ddayEvent(c); const col=statusColor(diff);
+    const cfp=fmtCfp(c);
+    const scopeCls = c.scope==="국제"?"intl":c.scope==="산업"?"ind":"";
+    const dateLabel = `${dt.getMonth()+1}.${String(dt.getDate()).padStart(2,"0")}`;
+    html+=`<a class="row ${diff<0?"past":""}" href="${c.url}" target="_blank" rel="noopener" style="--st:${col}">
+      <div class="ddaybox"><div class="big">${ddayText(diff)}</div><div class="lbl">${dateLabel}</div></div>
+      <div class="info">
+        <div class="nm"><span class="cat-dot" style="background:${CAT_COLOR[c.cat]}"></span>${c.name}
+          ${c.scope!=="국내"?`<span class="scope ${scopeCls}">${c.scope}</span>`:""}
+          ${c.confirmed?"":`<span class="est">추정</span>`}
+        </div>
+        <div class="line2">
+          <span><span class="k">분야</span>${c.cat}</span>
+          <span><span class="k">장소</span>${c.city}${c.venue&&c.venue!=="미정"?" · "+c.venue:""}</span>
+        </div>
+        <div class="host">${c.host}${c.note?" — "+c.note:""}</div>
+      </div>
+      <div class="cfp"><div class="k">논문마감</div><div class="v ${cfp.cls}">${cfp.txt}</div></div>
+    </a>`;
+  }
+  el.innerHTML=html;
+}
+
+function renderTime(){
+  const list=filtered().filter(c=>d(c.start).getFullYear()===2026).sort((a,b)=>d(a.start)-d(b.start));
+  const el=document.getElementById("timeView");
+  const yearStart=new Date(2026,0,1), yearEnd=new Date(2026,11,31);
+  const span=dayDiff(yearEnd,yearStart);
+  const pct=date=>Math.max(0,Math.min(100, dayDiff(date,yearStart)/span*100));
+  const nowPct=pct(today);
+  const rowH=34;
+  let bars="";
+  list.forEach((c,i)=>{
+    const left=pct(d(c.start));
+    const w=Math.max(7, pct(d(c.end))-left+3);
+    const col=CAT_COLOR[c.cat];
+    const dash=c.confirmed?"":"opacity:.55;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.25) 0 4px,transparent 4px 8px)";
+    bars+=`<div class="tl-ev" title="${c.name} (${fmtRange(c)})" style="left:${left}%;width:${w}%;top:${i*rowH}px;background:${col};${dash}">${shorten(c.name)}</div>`;
+  });
+  el.innerHTML=`<div class="tl"><div class="tl-grid">
+    <div class="tl-now" style="left:${nowPct}%"></div>
+    <div class="tl-months">${MONTHS.map(m=>`<span>${m}</span>`).join("")}</div>
+    <div class="tl-track" style="height:${list.length*rowH+8}px">${bars||'<div class="empty">2026년 표시할 행사가 없습니다.</div>'}</div>
+  </div></div>`;
+}
+
+function renderAll(){ if(state.view==="list") renderList(); else renderTime(); renderHero(); }
+
+function renderLegend(){
+  document.getElementById("legend").innerHTML =
+    Object.entries(CAT_COLOR).map(([k,v])=>`<span><i style="background:${v}"></i>${k}</span>`).join("")
+    + `<span><i style="background:var(--tba)"></i>추정 일정</span>`;
+}
+
+async function boot(){
+  let payload=SEED, live=false;
+  try{
+    const r=await fetch("./data/conferences.json",{cache:"no-store"});
+    if(r.ok){ const j=await r.json(); if(j&&Array.isArray(j.conferences)&&j.conferences.length){ payload=j; live=true; } }
+  }catch(e){ /* 데모/로컬 환경 → 시드 사용 */ }
+  DATA=payload.conferences;
+  document.getElementById("updated").textContent=payload.updated||"—";
+  const pill=document.getElementById("srcPill");
+  pill.textContent = live?"크롤링 데이터 (자동 갱신)":"내장 데이터 (데모)";
+  pill.className = "src-pill "+(live?"live":"demo");
+  document.getElementById("q").addEventListener("input",e=>{state.q=e.target.value;renderAll();});
+  document.getElementById("hidePast").addEventListener("change",e=>{state.hidePast=e.target.checked;renderAll();});
+  renderChips(); renderLegend(); renderAll();
+}
+boot();
+</script>
+</body>
+</html>
