@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-14 06:50 KST",
+  "updated": "2026-07-15 06:52 KST",
   "conferences": [
     {
       "id": "csc-2026",
@@ -114,6 +114,22 @@
       "note": "AI·블록체인·HW 암호 등"
     },
     {
+      "id": "cisc-w-2026",
+      "name": "한국정보보호학회 동계학술대회 (CISC-W'26)",
+      "host": "한국정보보호학회 (KIISC)",
+      "scope": "국내",
+      "cat": "정보보호",
+      "start": "2026-10-28",
+      "end": "2026-10-28",
+      "city": "미정",
+      "venue": "미정",
+      "cfpOpen": null,
+      "cfp": null,
+      "url": "https://www.cisc.or.kr",
+      "confirmed": true,
+      "note": "예년 11월 말 개최 기준 추정"
+    },
+    {
       "id": "kcsa-fall-2026",
       "name": "한국융합보안학회 추계학술대회",
       "host": "한국융합보안학회 (KCSA)",
@@ -128,22 +144,6 @@
       "url": "http://www.kcgsa.org",
       "confirmed": false,
       "note": "예년 기준 추정"
-    },
-    {
-      "id": "cisc-w-2026",
-      "name": "한국정보보호학회 동계학술대회 (CISC-W'26)",
-      "host": "한국정보보호학회 (KIISC)",
-      "scope": "국내",
-      "cat": "정보보호",
-      "start": "2026-11-27",
-      "end": "2026-11-28",
-      "city": "미정",
-      "venue": "미정",
-      "cfpOpen": null,
-      "cfp": null,
-      "url": "https://www.cisc.or.kr",
-      "confirmed": false,
-      "note": "예년 11월 말 개최 기준 추정"
     },
     {
       "id": "icisc-2026",
