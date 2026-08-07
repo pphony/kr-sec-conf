@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-07 09:59 KST",
+  "updated": "2026-08-08 06:32 KST",
   "conferences": [
     {
       "id": "csc-2026",
@@ -156,7 +156,7 @@
       "city": "서울",
       "venue": "미정",
       "cfpOpen": null,
-      "cfp": "2026-08-28",
+      "cfp": null,
       "url": "http://www.icisc.org",
       "confirmed": false,
       "note": "예년 11~12월 개최 기준 추정 · CFP 공지 전"
